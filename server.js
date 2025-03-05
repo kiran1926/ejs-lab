@@ -72,5 +72,23 @@ app.get("/menu", (req, res) => {
      });
 });
 
+//for category
+app.get("/menu/:category", (req, res) => {
+    let sortedMenuItems = RESTAURANT.menu;
+    let category = req.params.category;
+
+    // filter by category
+    if(category) {
+        sortedMenuItems = sortedMenuItems.filter(item => item.category.toLowerCase() === category.toLowerCase());
+    }
+
+    // capitalize category
+    let capitalizeCategory = category.charAt(0).toUpperCase() + category.slice(1);
+
+    res.render("category.ejs", { category: capitalizeCategory ,
+        menuItems : sortedMenuItems
+    });
+});
+
 //Listen to the route
 app.listen(3000);
